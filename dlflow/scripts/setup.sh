@@ -1,0 +1,2 @@
+pyinstaller dlflow.py
+setx
