@@ -1,3 +1,11 @@
+'''
+	Project Name : DLFlow
+	DLFLOW : A simple command line tool for making the Machine Learning Project Pipeline easier
+	Developed By : abtexp<abt.exp@gmail.com>
+	Organization : explabs<explabs.io>
+
+'''
+
 from colorama import init
 from os import listdir
 from termcolor import colored
@@ -5,61 +13,20 @@ import colorama
 from pyfiglet import figlet_format
 from PyInquirer import (Token, ValidationError, Validator, print_json, prompt,
                         style_from_dict)
-'''
-	Project Name : DLFlow
-	Developed By : abtexp<abt.exp@gmail.com>
-	Organization : explabs<explabs.io>
-
-'''
 
 # Local module imports
-from dlflow.settings import vars
-from dlflow.utils import *
-from dlflow.scripts import *
 from dlflow.configs import *
 
 # imports
-import click
 from argparse import ArgumentParser
 
 import os
 import re
-
-import click
-import six
-
 import sys
-
-import logging
-
-logging.getLogger('tensorflow').disabled = True
-logging.getLogger('keras').disabled = True
+import six
+import click
 
 
-'''
-DLFLOW : A simple command line tool for making the Machine Learning Project Pipeline easier
-
-'''
-# if __name__ == '__main__':
-# 	parser = ArgumentParser(
-#             prog='dlflow',
-#             description='dlflow commandline utility',
-#             usage='dlflow __command__ [__subcommand__ [? options]]'
-#         )
-
-# 	parser.add_argument_group('commands', 'Specify the main command to run.')
-# 	parser.add_argument(
-# 		'command', help='Name of the main command to run. Check https://explabs.ai/dlflow/docs/commands for more details')
-# 	parser.add_argument_group('subcommands', 'Specify subcommand to run.')
-# 	parser.add_argument(
-# 		'subcommand', help='Name of the subcommand to run. Check https://explabs.ai/dlflow/docs/subcommands for more details')
-
-# 	args = parser.parse_args()
-
-# 	print(args)
-
-logging.getLogger('tensorflow').disabled = True
-logging.getLogger('keras').disabled = True
 
 init()
 
@@ -90,14 +57,15 @@ def get_commands():
             {
                 'type': 'list',
 				'name': 'command',
-				'message': 'Select Main Command',
-				'choices': ['Create', 'Delete', 'Deploy', 'Activate', 'Push'],
+				'message': 'What Do You Want To Do?',
+				'choices': ['Create', 'Delete', 'Deploy', 'Activate', 'Push', 'Exit'],
             }
         ]
 
-	# Conditional Additions To The q
-
 	command = prompt(q, style=style)['command']
+
+	if command == 'Exit':
+		return False
 
 	main_command = configs[command]
 
@@ -107,13 +75,7 @@ def get_commands():
 
 	main_command['subconfigs'][subcommand]['function'](inputs)
 
-
-def parse_answers(answers):
-	selection = answers['selection']
-	user = answers['user_name']
-	mode = answers['mode']
-
-	return
+	return True
 
 
 @click.command()
@@ -121,46 +83,10 @@ def askQs():
 	log('DLFlow', color='blue', figlet=True)
 	log('Command Line Utility For Easy ML Development To Deployment Pipeline', 'green')
 
-	commands = get_commands()
+	keep_running = True
 
-
-
-	# if recast_mode == 'Puppet':
-	# 	print('Not Implemented Yet!!!!')
-	# 	return
-
-	# questions = [
-	# 	{
-	# 		'type': 'list',
-	# 		'name': 'selection',
-	# 		'message': 'Want To Select From List Or Upload Your Own',
-	# 		'choices': ['List', 'Upload'],
-	# 	}, {
-	# 		'type': 'list',
-	# 		'name': 'file_select',
-	# 		'message': 'Choose One Of The Following Available Files',
-	# 		'choices': get_available_files(recast_mode),
-	# 		'when': lambda x: x['selection'] == 'List',
-	# 		'filter':lambda x: 'D:/recast/data/video/target/'+x
-	# 	}, {
-	# 		'type': 'input',
-	# 		'name': 'file_pick',
-	# 		'message': 'Enter Path To Your File',
-	# 		'when': lambda x: x['selection'] == 'Upload'
-	# 	}, {
-	# 		'type': 'input',
-	# 		'name': 'user_name',
-	# 		'message': 'Please Enter Your User Name'
-	# 	}
-	# ]
-
-	# answers = prompt(questions, style=style)
-	# answers['mode'] = recast_mode
-
-	# params, rid, final_aud = parse_answers(answers)
-
-	# src_aud = ''
-	# src_vid = ''
+	while keep_running:
+		keep_running = get_commands()
 
 
 if __name__ == '__main__':

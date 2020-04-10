@@ -8,10 +8,15 @@ project_config = {
 				'message': 'Create New Project Or Choose Existing?',
 				'choices': ['New', 'Existing']
             }, {
-                'type': 'input',
+				'type': 'input',
 				'name': 'project_name',
 				'message': 'Project Name'
             }, {
+				'type': 'input',
+				'name': 'description',
+				'message': 'Description Of Your Project',
+				'when': lambda x: x['existence'] == 'New'
+			}, {
                 'type': 'input',
 				'name': 'root',
 				'message': 'Project Location',

@@ -1,11 +1,63 @@
+import os
+from os.path import isdir, exists
+from os import mkdir, chdir, rmdir, removedirs
+import subprocess
+
 def create_project(params):
-	return
+	pth = params['root']
+	git_create = params['git']
+	existence = params['existence']
+	project_name = params['project_name']
+
+	if 'repo' in params.keys():
+		repo = params['repo']
+
+	if 'description' in params.keys():
+		description = params['description']
+	else:
+		description = project_name
+
+	if isdir('{}/{}'.format(pth, project_name)):
+		removedirs('{}/{}/'.format(pth, project_name))
+
+	mkdir('{}/{}'.format(pth, project_name))
+
+	if not exists('{}/{}/Readme.md'.format(pth, project_name)):
+		text = description
+		with open('{}/{}/Readme.md'.format(pth, project_name), 'w') as f:
+			f.write(text)
+
+	chdir('{}/{}/'.format(pth, project_name))
+	all_folders = [
+						'checkpoints', 'data', 'docs', 'eval', 'experiments', 'logs',
+						'model_images', 'models', 'resources', 'scripts', 'settings',
+						'src', 'test', 'utils'
+					]
+
+	for folder in all_folders:
+		path = '{}/{}/{}'.format(pth, project_name, folder)
+		if not isdir(path):
+			mkdir(path)
+			if not exists('{}/Readme.md'.format(path)):
+				text = '{} help'.format(folder)
+				with open(path+'/Readme.md', 'w') as f:
+					f.write(text)
+
+				with open(path+'/__init__.py', 'w') as f:
+					f.write('')
+
 
 def create_user(params):
 	return
 
-def create_repository(params):
-	return
+def create_repository(repo):
+	cmd =  'git init . &&\
+			git remote add origin{} && \
+			git add &&\
+			git commit - -m "initial commit" && \
+			git push --set-upstream origin master'.format(repo)
+
+	subprocess.call(cmd, shell=True)
 
 def create_file(params):
 	return
