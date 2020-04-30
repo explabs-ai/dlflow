@@ -18,7 +18,6 @@ from PyInquirer import (Token, ValidationError, Validator, print_json, prompt,
 from dlflow.configs import *
 
 # imports
-from argparse import ArgumentParser
 
 import os
 import re

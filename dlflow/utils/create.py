@@ -1,13 +1,18 @@
 import os
+import subprocess
+from ..settings import vars
 from os.path import isdir, exists
 from os import mkdir, chdir, rmdir, removedirs
-import subprocess
+
 
 def create_project(params):
 	pth = params['root']
 	git_create = params['git']
 	existence = params['existence']
 	project_name = params['project_name']
+
+	if not exists(pth):
+		mkdir(pth)
 
 	if 'repo' in params.keys():
 		repo = params['repo']
@@ -28,11 +33,18 @@ def create_project(params):
 			f.write(text)
 
 	chdir('{}/{}/'.format(pth, project_name))
-	all_folders = [
-						'checkpoints', 'data', 'docs', 'eval', 'experiments', 'logs',
-						'model_images', 'models', 'resources', 'scripts', 'settings',
-						'src', 'test', 'utils'
-					]
+
+	root_files = vars.CREATE_PROJECT_PROPS['root_files']
+	root_dirs = vars.CREATE_PROJECT_PROPS['root_dirs']
+
+	for file in root_files:
+		with open(file, 'w') as f:
+			pass
+
+	for folder in root_dirs:
+		mkdir(folder)
+
+	all_folders = vars.CREATE_PROJECT_PROPS['all_folders']
 
 	for folder in all_folders:
 		path = '{}/{}/{}'.format(pth, project_name, folder)
