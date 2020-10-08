@@ -1,1 +1,7 @@
-file_config = {}
+file_config = {
+    'q':[
+        {
+            'type': ''
+        }
+    ]
+}
