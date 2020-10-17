@@ -31,7 +31,21 @@ project_config = {
 				'name': 'repo',
 				'message': 'Link To Repository',
 				'when': lambda x: x['git'] == 'Yes'
-            }
+            },{
+				'type': 'list',
+				'name': 'project_type',
+				'message': 'Select The Project Type',
+				'choices' : ['Classification', 'Regression', 'Generation', 'Detection']
+			},{
+				'type': 'list',
+				'name': 'data_type',
+				'message': 'Select The Data Type',
+				'choices': ['Image', 'Text', 'Audio', 'Structured']
+			},{
+				'type': 'input',
+				'name': 'dset_dir',
+				'message': 'Path To Dataset Directory'
+			}
         ],
 	'function': create_project
 }

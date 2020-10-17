@@ -44,10 +44,13 @@ def create_project(params):
 	for folder in root_dirs:
 		mkdir(folder)
 
+	# Make The Root Project Directory
+	mkdir(project_name)
+
 	all_folders = vars.CREATE_PROJECT_PROPS['all_folders']
 
 	for folder in all_folders:
-		path = '{}/{}/{}'.format(pth, project_name, folder)
+		path = '{}/{}/{}/{}'.format(pth, project_name, project_name, folder)
 		if not isdir(path):
 			mkdir(path)
 			if not exists('{}/Readme.md'.format(path)):
@@ -60,13 +63,14 @@ def create_project(params):
 
 
 def create_user(params):
+
 	return
 
 def create_repository(repo):
 	cmd =  'git init . &&\
-			git remote add origin{} && \
-			git add &&\
-			git commit - -m "initial commit" && \
+			git remote add origin {} && \
+			git add . &&\
+			git commit --m "initial commit" && \
 			git push --set-upstream origin master'.format(repo)
 
 	subprocess.call(cmd, shell=True)
