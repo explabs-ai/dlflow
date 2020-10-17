@@ -5,11 +5,12 @@ user_config = {
         {
             'type': 'input',
             'name': 'username',
-            'message': 'Name Of The User'
+            'message': 'User Name'
         },{
             'type': 'input',
-            'name': 'email',
-            'message': 'User Email Or GitHub User Name'
+            'name': 'github',
+            'message': 'Github Id Or Email'
         }
-    ]
+    ],
+    'function': create_user
 }

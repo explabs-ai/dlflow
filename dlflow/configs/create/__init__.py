@@ -12,7 +12,7 @@ create_config = {
 	}],
 	'subconfigs': {
 		'Project': project_config,
-		'Git': git_config,
+		'Repository': git_config,
 		'File': file_config,
 		'User': user_config
 	}

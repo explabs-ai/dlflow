@@ -16,6 +16,7 @@ from PyInquirer import (Token, ValidationError, Validator, print_json, prompt,
 
 # Local module imports
 from dlflow.configs import *
+from dlflow import DLFLOW
 
 # imports
 
@@ -52,6 +53,8 @@ def log(string, color, font="slant", figlet=False):
 
 
 def get_commands():
+	dlflow = DLFLOW()
+
 	q = [
             {
                 'type': 'list',
@@ -66,13 +69,16 @@ def get_commands():
 	if command == 'Exit':
 		return False
 
+	if command in ['Activate']:
+		project_list = dlflow.config.all_projects
+
 	main_command = configs[command]
 
 	subcommand = prompt(main_command['q'], style=style)['subcommand']
 
 	inputs = prompt(main_command['subconfigs'][subcommand]['q'], style=style)
 
-	main_command['subconfigs'][subcommand]['function'](inputs)
+	dlflow.execute(main_command['subconfigs'][subcommand]['function'], inputs)
 
 	return True
 
